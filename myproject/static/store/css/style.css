@@ -1,0 +1,9 @@
+/* Topbar */
+.topbar {
+  background-color: #ccc;
+  height: 30px;
+}
+
+.navbar {
+  padding: 0px !important;
+}
