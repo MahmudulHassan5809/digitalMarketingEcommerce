@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <title>{% block title %}{% endblock title %}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     {% include 'partials/_css.html' %}
 
-  </head>
-  <body>
+</head>
+<body>
     {% include 'partials/_topbar.html' %}
+
+    {% include 'partials/_header.html' %}
 
 
     <div class="container">
-    {% block maincontent %}
-    {% endblock maincontent %}
+        {% block maincontent %}
+        {% endblock maincontent %}
     </div>
 
-  
+    
+
+
     {% include 'partials/_js.html' %} 
-  </body>
+</body>
 </html>
