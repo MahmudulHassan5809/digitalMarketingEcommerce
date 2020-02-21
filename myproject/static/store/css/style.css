@@ -1,7 +1,9 @@
-.body {
+html,
+body {
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
-
 .top-bar {
   background-color: #fff;
   border-bottom: 1px solid #f1f1f1;
@@ -13,6 +15,7 @@
 }
 .my-navbar {
   padding: 0px !important;
+  z-index: 999;
 }
 .my-navlink {
   color: #82797d;
@@ -28,6 +31,7 @@
 .social-links ul {
   list-style-type: none;
 }
+
 .navbar-brand {
   cursor: text;
   font-size: 15px;
@@ -68,6 +72,7 @@
   border-right: 1px solid #f1f1f1;
 }
 .header {
+  position: relative;
   height: 125px;
 }
 .header-left {
@@ -127,18 +132,7 @@
   margin-right: 35%;
   margin-top: 20px;
 }
-@media only screen and (max-width: 768px) {
-  .header-left {
-    padding: 0;
-    text-align: center;
-  }
-  .cart {
-    margin: 0 10%;
-  }
-  .contact p {
-    text-align: center;
-  }
-}
+
 .cart-left {
   border-right: 1px solid #f1f1f1;
   padding-right: 10px;
@@ -157,3 +151,59 @@
 .cart-right {
   margin-top: 15px;
 }
+.navbar-collapse {
+  background: #fff;
+}
+
+.main-navbar {
+  margin-left: -15px;
+  background-color: #292929;
+}
+.main-navbar ul li a {
+  color: #fff;
+}
+
+.main-navbar .dropdown-menu {
+  background-color: #292929;
+}
+
+.navbar-toggler-icon {
+  color: #aaa;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 3px 2px 2px 5px;
+}
+.navbar-toggler-icon:hover {
+  color: #fff;
+  background-color: rgb(83, 81, 81);
+}
+@media only screen and (max-width: 768px) {
+  .header-left {
+    padding: 0;
+    text-align: center;
+  }
+  .cart {
+    margin: 0 10%;
+  }
+  .contact p {
+    text-align: center;
+  }
+  .main-nav {
+    margin-top: -16px !important;
+  }
+  .main-navbar {
+    margin-left: 0px;
+  }
+}
+
+
+
+@media only screen and (max-width: 768px){
+  .btn-block-xs-only {
+    display: block;
+    width: 100%;
+  }
+}
+
+
+
