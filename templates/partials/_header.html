@@ -35,7 +35,7 @@
                 >
                   <option selected>All Categories</option>
                   {% for cat in categories %}
-                  <option value="{{cat.id}}">{{cat.category_name}}</option>
+                    <option value="{{cat.id}}">{{cat.category_name}}</option>
                   {% endfor %}
                 </select>
 
@@ -46,7 +46,7 @@
                   class="form-control"
                 />
 
-                <button type="submit" class="btn btn-danger my-1">
+                <button type="submit" class="btn btn-danger my-1 btn-block-xs-only">
                   <i class="fa fa-search"></i>
                 </button>
               </form>
