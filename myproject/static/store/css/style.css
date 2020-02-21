@@ -2,7 +2,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 .top-bar {
   background-color: #fff;
@@ -90,11 +89,11 @@ body {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 139px 0 0 90px;
+  border-width: 160px 0 0 94px;
   border-color: transparent transparent transparent #292929;
   position: absolute;
-  left: -16px;
-  top: 0;
+  left: -15px;
+  top: -24px;
 }
 .contact p {
   font-size: 14px;
@@ -196,14 +195,9 @@ body {
   }
 }
 
-
-
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) {
   .btn-block-xs-only {
     display: block;
     width: 100%;
   }
 }
-
-
-
