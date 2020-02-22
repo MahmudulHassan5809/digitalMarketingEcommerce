@@ -9,9 +9,9 @@ Register
 
 
 {% block maincontent %}
-<div class="col-md-12">
-
-
+<div class="col-md-8 mx-auto">
+	<div class="card shadow p-3 mt-2">
+	<h3 class="text-center">Register</h3>
 	<div class="register">
 		{% include 'partials/_alert.html' %}
 		<form id="register-form"  name="register"  method="POST" enctype="multipart/form-data" novalidate>
@@ -19,11 +19,10 @@ Register
 			<div class="divider"></div>
 			{{ formset.management_form  }}
 			{{ formset|crispy }}
-
 			<input type="submit" value="Register" class="btn btn-info btn-sm">
 		</form>
 	</div>
-
+  </div>
 </div>
 {% endblock maincontent %}
 

@@ -202,7 +202,6 @@ body {
   }
 }
 
-
 @media only screen and (max-width: 768px) {
   .btn-block-xs-only {
     display: block;
@@ -210,7 +209,30 @@ body {
   }
 }
 
-
-.error{
+.error {
   color: red;
+}
+
+.category_card {
+  position: relative;
+  border: 1px solid #f1f1f1;
+}
+
+.category_card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  color: #fff;
+  opacity: 0%;
+  background-color: rgba(127, 127, 127, 0.7);
+  transition: 0.3s ease-in all;
+}
+
+.category_card__hover {
+  opacity: 100%;
+  top: 50%;
+  left: 0;
 }

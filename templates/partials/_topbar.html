@@ -24,7 +24,10 @@
           <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0 pl-3 pt-md-2">
               <li class="nav-item active">
-                <a class="nav-link my-navlink" id="home-link" href="#"
+                <a
+                  class="nav-link my-navlink"
+                  id="home-link"
+                  href="{% url 'store:home' %}"
                   >Home <span class="sr-only">(current)</span></a
                 >
               </li>
@@ -70,7 +73,12 @@
         <div class="topbar-right">
           <div class="social-links">
             <ul class="d-flex justify-content-left">
-              <a href="#" class="pb-2" id="login-register">Login / Register</a>
+              <a
+                href="{% url 'auth:register' %}"
+                class="pb-2"
+                id="login-register"
+                >Login / Register</a
+              >
               <li>
                 <a href="https://web.facebook.com/buysmmusa/" target="_blank"
                   ><i class="fa fa-facebook"></i
