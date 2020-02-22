@@ -11,7 +11,7 @@
        {% for cat in categories %}
             <div class="col-md-3 col-sm-6">
                <div class="category_card">
-                    <img class="img-fluid" src="{{cat.category_image.url}}" alt="">
+                    <a href="{% url 'store:category_product' cat.id %}"><img class="img-fluid" src="{{cat.category_image.url}}" alt=""></a>
                     <div class="category_card__overlay">
                         (2)
                     </div>

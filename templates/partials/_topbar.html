@@ -73,12 +73,19 @@
         <div class="topbar-right">
           <div class="social-links">
             <ul class="d-flex justify-content-left">
-              <a
-                href="{% url 'auth:register' %}"
-                class="pb-2"
-                id="login-register"
-                >Login / Register</a
-              >
+              {% if user.is_authenticated %}
+                <a
+                  href="{% url 'auth:dashboard' %}"
+                  class="pb-2"
+                  id="login-register"
+                  >Dashboard</a>
+              {% else %}
+                 <a
+                  href="{% url 'auth:register' %}"
+                  class="pb-2"
+                  id="login-register"
+                  >Login / Register</a> 
+              {% endif %}
               <li>
                 <a href="https://web.facebook.com/buysmmusa/" target="_blank"
                   ><i class="fa fa-facebook"></i
