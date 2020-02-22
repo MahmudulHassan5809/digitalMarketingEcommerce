@@ -1,0 +1,81 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Register
+{% endblock title %}
+
+
+{% block maincontent %}
+<div class="col-md-12">
+
+
+	<div class="register">
+		{% include 'partials/_alert.html' %}
+		<form id="register-form"  name="register"  method="POST" enctype="multipart/form-data" novalidate>
+			{% csrf_token %} {{ noodle_form|crispy }}
+			<div class="divider"></div>
+			{{ formset.management_form  }}
+			{{ formset|crispy }}
+
+			<input type="submit" value="Register" class="btn btn-info btn-sm">
+		</form>
+	</div>
+
+</div>
+{% endblock maincontent %}
+
+
+{% block script %}
+<script src="{% static 'store/js/jquery.validate.min.js' %}"></script>
+<script>
+$(document).ready(function() {
+	$("#register-form").validate({
+		rules: {
+			first_name : {
+				required: true,
+				minlength: 5
+			},
+			last_name : {
+				required: true,
+				minlength: 5
+			},
+			username : {
+				required: true,
+			},
+			email: {
+				required: true,
+				email: true
+			},
+			password: {
+				password: true,
+				minlength: 6
+			},
+			
+		},
+		messages : {
+			first_name: {
+				minlength: "First Name should be at least 5 characters"
+			},
+			last_name: {
+				minlength: "Last Name should be at least 5 characters"
+			},
+			username: {
+				minlength: "Username is Required"
+			},
+			email: {
+				email: "The email should be in the format: abc@domain.tld"
+			},
+			password: {
+				email: "Password should be at least 6 characters"
+			},
+
+		}
+	});
+
+});
+
+</script>
+{% endblock script %}

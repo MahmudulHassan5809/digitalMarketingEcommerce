@@ -5,6 +5,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('authentication/',include('authentication.urls', namespace="authentication")),
     path('', include('store.urls', namespace="store"))
 ]
 

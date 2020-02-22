@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'authentication',
     'store',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +140,6 @@ MEDIA_URL = '/media/'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
