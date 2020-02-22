@@ -4,25 +4,63 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Register
+ Register/Login
 {% endblock title %}
 
 
 {% block maincontent %}
 <div class="col-md-8 mx-auto">
 	<div class="card shadow p-3 mt-2">
-	<h3 class="text-center">Register</h3>
-	<div class="register">
-		{% include 'partials/_alert.html' %}
-		<form id="register-form"  name="register"  method="POST" enctype="multipart/form-data" novalidate>
-			{% csrf_token %} {{ noodle_form|crispy }}
-			<div class="divider"></div>
-			{{ formset.management_form  }}
-			{{ formset|crispy }}
-			<input type="submit" value="Register" class="btn btn-info btn-sm">
-		</form>
+		
+		<ul class="nav nav-tabs mx-auto" id="myTab" role="tablist">
+		  
+		  <li class="nav-item">
+
+		    <a class="nav-link {% if not login_form %} active {% endif %}" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="true">Register</a>
+		  </li>
+		  
+		  <li class="nav-item">
+		    <a class="nav-link {% if login_form %} active {% endif %}" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="false">Login</a>
+		  </li>
+		  
+		</ul>
+		<div class="tab-content" id="myTabContent">
+		  <div class="tab-pane fade {% if not login_form %} show active {% endif %}" id="register" role="tabpanel" aria-labelledby="register-tab">
+				  	<div class="register">
+				  	<h3 class="text-center my-2">Register</h3>
+					{% include 'partials/_alert.html' %}
+					<form id="register-form"  action="{% url 'auth:register' %}" name="register"  method="POST" enctype="multipart/form-data" novalidate>
+						{% csrf_token %} {{ noodle_form|crispy }}
+						<div class="divider"></div>
+						{{ formset.management_form  }}
+						{{ formset|crispy }}
+						<input type="submit" value="Register" class="btn btn-info btn-sm">
+					</form>
+				</div>
+		  </div>
+		  <div class="tab-pane fade {% if  login_form %} show active {% endif %}" id="login" role="tabpanel" aria-labelledby="login-tab">
+				  	<div class="register">
+				  	<h3 class="text-center my-2">Login</h3>
+					{% include 'partials/_alert.html' %}
+					<form action="{% url 'auth:login' %}" id="login-form" method="POST" novalidate>
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="username">Username</label>
+							<input type="text" name="username" id="username" placeholder="Username" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="password">Password</label>
+							<input type="password" name="password" id="password" placeholder="Password" class="form-control">
+						</div>
+						<input type="submit" value="Register" class="btn btn-info btn-sm">
+					</form>
+				</div>
+
+		  </div>
+		  
+		</div>
+		
 	</div>
-  </div>
 </div>
 {% endblock maincontent %}
 
@@ -49,7 +87,7 @@ $(document).ready(function() {
 				email: true
 			},
 			password: {
-				password: true,
+				required: true,
 				minlength: 6
 			},
 			
@@ -66,6 +104,27 @@ $(document).ready(function() {
 			},
 			email: {
 				email: "The email should be in the format: abc@domain.tld"
+			},
+			password: {
+				email: "Password should be at least 6 characters"
+			},
+
+		}
+	});
+
+	$("#login-form").validate({
+		rules: {
+			username : {
+				required: true,
+			},
+			password: {
+				required: true,
+			},
+			
+		},
+		messages : {
+			username: {
+				minlength: "Username is Required"
 			},
 			password: {
 				email: "Password should be at least 6 characters"
