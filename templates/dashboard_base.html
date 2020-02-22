@@ -1,0 +1,47 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+
+
+{% block maincontent %}
+
+<div class="d-flex" id="wrapper">
+	<div class="bg-light border-right" id="sidebar-wrapper">
+		<div class="sidebar-heading">Welcome Dashboard</div>
+		<div class="list-group list-group-flush">
+			<a href="{% url 'auth:dashboard' %}" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+			<a href="{% url 'auth:edit_profile' %}" class="list-group-item list-group-item-action bg-light">Edit Profile</a>
+			<a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+			<a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+			<a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+			<a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+		</div>
+	</div>
+
+	<!-- Page Content -->
+	<div id="page-content-wrapper">
+
+		<button class="btn btn-primary" id="menu-toggle"><span><i class="fa fa-bars"></i></span></button>
+
+			
+
+		{% block content %}
+		    
+		{% endblock content %}
+	</div>
+
+
+</div>
+
+
+{% endblock maincontent %}
+
+
+{% block script %}
+    <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+{% endblock script %}

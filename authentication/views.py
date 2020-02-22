@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .models import Profile
 from .forms import UserForm
@@ -71,7 +72,7 @@ class LoginView(View):
         return render(request, 'authentication/register.html', {
             "noodle_form": user_form,
             "formset": formset,
-            "login_from" : True
+            "login_form" : True
         })
     
     def post(self, request, *args, **kwargs):
@@ -84,7 +85,19 @@ class LoginView(View):
             return redirect('auth:login')
         elif user is not None:
             login(request, user)
-            return redirect('store:home')
+            return redirect('auth:dashboard')
         else:
             messages.error(request, ('Invalid Credentials'))
             return redirect('auth:login')
+
+
+
+class DashboardView(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        return render(request,'authentication/dashboard.html')
+
+
+
+class EditProfileView(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        return render(request,'authentication/edit_profile.html')
