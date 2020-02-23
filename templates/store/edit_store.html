@@ -1,7 +1,5 @@
 {% extends 'dash_base.html' %} 
 {% load static %}
-
-
 {% load crispy_forms_tags %}
 
 {% block title %}
@@ -13,12 +11,14 @@
 		{% include 'partials/_alert.html' %}
 	
 		<div class="card shadow mt-2 p-4">
-			<img src="{{store_banner.url}}" alt="">
+			<img src="{{store_banner.url}}" class="img-fluid">
 			<form method="post" action="{% url 'store:store_view' %}" novalidate enctype="multipart/form-data">
 		    {% csrf_token %}
 		    {{ store_form|crispy }}
 		    <button type="submit" class="btn btn-primary">Edit Store</button>
 		  </form>
 		</div>
+
+	
 	
 {% endblock dashcontent %}
