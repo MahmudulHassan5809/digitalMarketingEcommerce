@@ -237,12 +237,11 @@ body {
   left: 0;
 }
 
-
-.dashboard{
+.dashboard {
   overflow: hidden !important;
 }
 @media only screen and (max-width: 768px) {
   .dashboard {
-    margin-top:180px;
+    margin-top: 180px;
   }
 }

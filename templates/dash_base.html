@@ -1,0 +1,26 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block maincontent %}
+<div class="container dashboard">
+	<div class="row">
+		<div class="col-md-3">
+      <h5 class="bg-info p-2 text-white mb-2 mt-2">Dashboard Action</h5>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+    </div>
+		</div>
+		<div class="col-md-9">
+			{% block dashcontent %}
+            
+            {% endblock dashcontent %}
+		</div>
+	</div>
+</div>
+</div>
+{% endblock maincontent %}

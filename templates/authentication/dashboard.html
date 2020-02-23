@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'dash_base.html' %} 
 {% load static %}
 
 {% block title %}
@@ -6,36 +6,32 @@ Dashboard
 {% endblock title %}
 
 
-{% block maincontent %}
-<div class="container dashboard">
-	<div class="row">
-		<div class="col-md-4">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci cumque doloremque, dolor eaque fugiat voluptatibus nostrum cupiditate nemo quaerat fugit inventore nulla beatae vitae sapiente odio totam. Ut, ad, totam!
-		</div>
-		<div class="col-md-8">
+{% block dashcontent %}
 			<div class="row">
 				<div class="col-md-8">
 					<h4 class="bg-info text-white p-2 mt-2">Profile Info</h4>
+          {% include 'partials/_alert.html' %}
 					<div class="card shadow p-3">
-						<form>
+						<form action="{% url 'auth:edit_profile' %}" method="POST">
+            {% csrf_token %}
 							<div class="row">
 								<div class="col">
 									<label for="first_name">First Name</label>
-									<input type="text" class="form-control" placeholder="First name">
+									<input type="text" class="form-control" name="first_name" placeholder="First name" value="{{user.first_name}}">
 								</div>
 								<div class="col">
 									<label for="last_name">Last Name</label>
-									<input type="text" class="form-control" placeholder="Last name">
+									<input type="text" class="form-control" name="last_name" placeholder="Last name" value="{{user.last_name}}">
 								</div>
 							</div>
 							<div class="row">
 								<div class="col">
 									<label for="phone_number">Phone Number</label>
-									<input type="text" class="form-control" placeholder="Phone Number">
+									<input type="text" class="form-control" name="phone_number" placeholder="Phone Number" value="{{user.user_profile.phone_number}}">
 								</div>
 								<div class="col">
 									<label for="address">Address</label>
-									<textarea type="text" class="form-control" placeholder="Address"></textarea>
+									<textarea type="text" name="address" class="form-control" placeholder="Address">{{user.user_profile.address}}</textarea>
 								</div>
 							</div>
 							<button class="btn btn-info">Update</button>
@@ -45,16 +41,13 @@ Dashboard
 				<div class="col-md-4">
 					<h4 class="bg-info text-white p-2 mt-2">Profile Picture</h4>
 					<div class="card shadow p-3 pt-0"> 
-						<img src="http://3.bp.blogspot.com/-snBhLU3seSg/VVTtRTpRyxI/AAAAAAAAB1M/vDptD5pfq_w/s1600/whatsappimages%2Bfunny%2Bdp%2B(12).jpg" alt="" class="img-fluid rounded-circle mx-auto" style="max-height: 180px; max-width: 180px;">
-						<form action=".">
+						<img src="{{user.user_profile.profile_pic.url}}" alt="" class="img-fluid rounded-circle mx-auto" style="max-height: 125px; max-width: 125px;">
+						<form action="{% url 'auth:edit_profile' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 							<input type="file" name="profile_image" id="" class="form-control-file form-control-sm">
 							<button class="btn btn-info btn-block mt-1">Change Profile Picture</button>
 						</form>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-</div>
-{% endblock maincontent %}
+{% endblock dashcontent %}

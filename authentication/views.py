@@ -18,7 +18,7 @@ class RegisterView(View):
         return render(request, 'authentication/register.html', {
             "noodle_form": user_form,
             "formset": formset,
-            "login_form" : False
+            "login_form": False
         })
 
     def post(self, request, *args, **kwargs):
@@ -62,7 +62,6 @@ class RegisterView(View):
             return redirect('auth:register')
 
 
-
 class LoginView(View):
     def get(self, request, *args, **kwargs):
         user_form = UserForm()
@@ -72,9 +71,9 @@ class LoginView(View):
         return render(request, 'authentication/register.html', {
             "noodle_form": user_form,
             "formset": formset,
-            "login_form" : True
+            "login_form": True
         })
-    
+
     def post(self, request, *args, **kwargs):
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -91,13 +90,33 @@ class LoginView(View):
             return redirect('auth:login')
 
 
-
-class DashboardView(LoginRequiredMixin,View):
+class DashboardView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        return render(request,'authentication/dashboard.html')
+        return render(request, 'authentication/dashboard.html')
 
 
+class EditProfileView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone_number = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        profile_image = request.FILES.get('profile_image')
 
-class EditProfileView(LoginRequiredMixin,View):
-    def get(self, request, *args, **kwargs):
-        return render(request,'authentication/edit_profile.html')
+        if first_name:
+            request.user.first_name = first_name
+        if last_name:
+            request.user.last_name = last_name
+        if phone_number:
+            request.user.user_profile.phone_number = phone_number
+        if address:
+            request.user.user_profile.address = address
+        if profile_image:
+            request.user.user_profile.profile_pic = profile_image
+
+        request.user.save()
+        request.user.user_profile.save()
+
+        messages.success(request, "Profile Updated Successfully")
+
+        return render(request, 'authentication/dashboard.html')
