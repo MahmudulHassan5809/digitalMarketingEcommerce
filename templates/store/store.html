@@ -11,9 +11,20 @@
 
 {% block dashcontent %}
 {% include 'partials/_alert.html' %}
-	<form method="post" action="{% url 'store:store_view' %}" novalidate>
-    {% csrf_token %}
-    {{ store_form|crispy }}
-    <button type="submit" class="btn btn-primary">Create Store</button>
-  </form>
+	{% if store_form %}
+		<div class="card shadow mt-2 p-4">
+			<form method="post" action="{% url 'store:store_view' %}" novalidate enctype="multipart/form-data">
+		    {% csrf_token %}
+		    {{ store_form|crispy }}
+		    <button type="submit" class="btn btn-primary">Create Store</button>
+		  </form>
+		</div>
+	{% else %}
+	<div class="card shadow mt-2 p-4">
+		<p class="text-center lead text-dark">
+			You Have Already A Store .Please Add Product To Your Store
+			<a href="{% url 'store:edit_store' store.id %}" class="form-control btn btn-sm btn-info mt-2">Edit Youe Store</a>
+		</p>
+	</div>
+	{% endif %}
 {% endblock dashcontent %}
