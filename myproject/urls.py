@@ -5,6 +5,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('auth/', include('authentication.urls', namespace="auth")),
     path('', include('store.urls', namespace="store"))
 ]
@@ -19,3 +20,9 @@ if settings.FORCE_STATIC_FILE_SERVING and not settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
     settings.DEBUG = False
+
+
+
+admin.site.site_header = "DigitalService Admin"
+admin.site.site_title = "DigitalService Admin Portal"
+admin.site.index_title = "Welcome to DigitalService Researcher Portal"

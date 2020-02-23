@@ -28,6 +28,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'store',
+    'taggit',
+    'ckeditor',
+    'ckeditor_uploader',
     'crispy_forms',
 ]
 
@@ -130,4 +133,18 @@ MESSAGE_TAGS = {
 }
 
 
+JQUERY_URL = True
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+CKEDITOR_UPLOAD_PATH = "ck_editor/"
+CKEDITOR_RESTRICT_BY_USER = True
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'width': '100%'
+    }
+}

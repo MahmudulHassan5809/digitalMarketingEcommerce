@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
+from taggit.models import Tag
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 
 class Category(models.Model):
@@ -37,9 +41,10 @@ class Product(models.Model):
 
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='products/')
-    description = models.TextField()
+    description = RichTextUploadingField()
     price = models.FloatField()
     discount = models.PositiveIntegerField(blank=True, null=True)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.name
