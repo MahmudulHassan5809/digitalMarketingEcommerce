@@ -19,13 +19,16 @@ class StoreView(LoginRequiredMixin,View):
 		return render(request,'store/store.html',context)
 	def post(self,request,*args,**kwargs):
 		form = StoreForm(request.POST)
+		context = {
+			'store_form': form
+		}
 		if form.is_valid():
 			store = form.save(commit=False)
 			store.owner = request.user
 			store.save()
 			return redirect('store:store_view')
 		else:
-			return redirect('store:store_view')
+			return render(request,'store/store.html',context)
 
 
 
