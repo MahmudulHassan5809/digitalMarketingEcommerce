@@ -9,6 +9,7 @@ class Profile(models.Model):
     profile_pic  = models.ImageField(upload_to="profile/%Y/%m/%d/",default="profile/default.png")
     phone_number = models.CharField(max_length=15,default='01xxxxxxxxxx')
     address      = models.TextField(default='Your Address')
+    
 
 
     def __str__(self):

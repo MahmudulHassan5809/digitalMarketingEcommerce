@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import StoreForm, ProductForm
-from .models import Store, Product
+from .models import Store, Product,Category
 from django.views import View
 
 
@@ -83,6 +84,38 @@ class MyProductView(LoginRequiredMixin, View):
             return render(request, 'store/product.html', context)
 
 
+class MyProduct(LoginRequiredMixin,View):
+    def get(self,request,*args,**kwargs):
+        store_id = kwargs.get('id')
+        store_obj = get_object_or_404(Store,id=store_id)
+        my_products = Product.objects.filter(store=store_id)
+        
+        page = request.GET.get('page', 1)
+        paginator = Paginator(my_products, 10)
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+        context = {'my_products' : products,"store":store_obj}
+        return render(request, 'store/my_product.html', context)
+
+
+
 class CategoryProductView(View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse('okkkkkkkkkkkkkkkkkkk')
+        category_id = kwargs.get('id')
+        category_obj = get_object_or_404(Category,id=category_id)
+        products = Product.objects.filter(category=category_id)
+
+        page = request.GET.get('page', 1)
+        paginator = Paginator(products, 10)
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+        context = {'products' : products,"category":category_obj}
+        return render(request, 'store/category_product.html', context)
