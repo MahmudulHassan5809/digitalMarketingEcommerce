@@ -12,8 +12,36 @@
 {% block maincontent %}
 <div class="container">
 	<div class="row mt-3">
-		
 
+		<!-- Products-->
+				<h4 class="mx-auto mt-2 mb-4 bg-info p-2 text-white rounded">{{category.category_name}}</h4>
+				<div class="row">
+				{% for product in products %}
+					<div class="col-md-3 col-sm-6">
+						<div class="product-grid2">
+							<div class="product-image2">
+								<a href="#">
+									<img class="pic-1" src="{{ product.image.url }}">
+									<img class="pic-2" src="{{ product.image.url }}">
+								</a>
+								<ul class="social">
+									<li><a href="#" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
+									<li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
+									<li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+								</ul>
+								<a class="add-to-cart" href="">Add to cart</a>
+							</div>
+							<div class="product-content">
+								<h3 class="title"><a href="#">{{ product.name }}</a></h3>
+								<span class="price">${{product.price }}</span>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+			
+				</div>
+			
+		<!-- /Products-->
 
 		{% with products as items %}
 		{% if items.has_other_pages %}
