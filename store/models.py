@@ -21,6 +21,9 @@ class Category(models.Model):
         return ' -> '.join(full_path[::-1])
 
 
+
+
+
 class Store(models.Model):
     owner = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='user_store')
@@ -30,6 +33,13 @@ class Store(models.Model):
 
     def __str__(self):
         return self.store_name
+
+
+class PaymentMethod(models.Model):
+    method_name = models.CharField(max_length=150)
+    account_number = models.CharField(max_length=150)
+    store = models.ForeignKey(Store,on_delete=models.CASCADE,related_name='store_payment_method')
+
 
 
 class Product(models.Model):

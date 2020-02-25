@@ -6,7 +6,7 @@
 	<div class="card-header bg-dark text-light">
 		<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 		Shpping cart
-		<a href="" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
+		<a href="{% url 'store:home' %}" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
 		<div class="clearfix"></div>
 	</div>
 	<div class="card-body">
@@ -43,7 +43,7 @@
 		
 		<div class="pull-right">
 			
-			<a href="" class="btn btn-outline-secondary pull-right">
+			<a href="{% url 'cart:cart_checkout' %}" class="btn btn-outline-secondary pull-right">
 				CheckOut
 			</a>
 			<a href="{% url 'cart:cart_clear' %}" class="btn btn-outline-danger pull-right">

@@ -2,8 +2,8 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .forms import StoreForm, ProductForm
-from .models import Store, Product, Category
+from .forms import StoreForm, ProductForm,PaymentMethodForm
+from .models import Store, Product, Category,PaymentMethod
 from django.views import View
 from django.views.generic import DetailView
 
@@ -123,3 +123,65 @@ class CategoryProductView(View):
 
 class ProductDetailView(DetailView):
     model = Product
+
+
+
+
+class PaymenthMethodView(LoginRequiredMixin,View):
+    def get(self,request,*args,**kwargs):
+        payment_method_form = PaymentMethodForm()
+        all_payment_method = PaymentMethod.objects.filter(store=request.user.user_store)
+        context = {
+            'payment_method_form': payment_method_form,
+            'all_payment_method' : all_payment_method,
+            'edit' : False
+        }
+        return render(request, 'store/payment_method.html', context)
+    def post(self,request,*args,**kwargs):
+        form = PaymentMethodForm(request.POST)
+        context = {
+            'payment_method_form': form
+        }
+        if form.is_valid():
+            payment_method = form.save(commit=False)
+            payment_method.store = request.user.user_store
+            payment_method.save()
+            messages.success(request, 'Payment Method is created successfully')
+            return redirect('store:payment_method')
+        else:
+            return render(request, 'store/payment_method.html', context)
+
+
+class PaymenthMethodEdit(LoginRequiredMixin,View):
+    def get(self,request,*args,**kwargs):
+        method = get_object_or_404(PaymentMethod, pk=kwargs.get('id'))
+        payment_method_form = PaymentMethodForm(instance=method)
+        all_payment_method = PaymentMethod.objects.filter(store=request.user.user_store)
+        context = {
+            'payment_method_form': payment_method_form,
+            'all_payment_method' : all_payment_method,
+            'method' : method,
+            'edit' : True
+        }
+        return render(request, 'store/payment_method.html', context)
+    
+    def post(self, request, *args, **kwargs):
+        method = get_object_or_404(PaymentMethod, pk=kwargs.get('id'))
+        form = PaymentMethodForm(request.POST,instance=method)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Method Updated Successfully')
+            return redirect('store:payment_method')
+
+        return redirect('store:payment_method')
+
+
+class PaymenthMethodDelete(LoginRequiredMixin,View):
+    def get(self, request, *args, **kwargs):
+        method = get_object_or_404(PaymentMethod, pk=kwargs.get('id'))
+        method.delete()
+
+        messages.success(request, 'Method Deleted Successfully')
+        return redirect('store:payment_method')
+
+        

@@ -17,25 +17,6 @@ def cart_add(request, id):
     cart.add(product=product)
     return redirect("store:home")
 
-
-@login_required(login_url="auth:login")
-def cart_detail(request):
-    sub = []
-    qty = []
-    total = 0
-    for key, value in request.session['cart'].items():
-        sub.append(float(value['price']) * float(value['quantity']))
-        qty.append(int(value['quantity']))
-    for s in sub:
-        total = total + s
-    context = {
-        'title': 'My Cart',
-        'sub': sub,
-        'total': total
-    }
-    return render(request, 'cart/cart_detail.html', context)
-
-
 @login_required(login_url="auth:login")
 def item_clear(request, id):
     cart = Cart(request)
@@ -71,3 +52,8 @@ def cart_clear(request):
 class CartDetail(LoginRequiredMixin,View):
     def get(self,request,*args,**kwargs):
         return render(request,'cart/cart_detail.html')
+
+
+class CartCheckOut(LoginRequiredMixin,View):
+    def get(self,request,*args,**kwargs):
+        pass

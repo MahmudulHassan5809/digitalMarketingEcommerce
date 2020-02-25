@@ -1,5 +1,5 @@
 from django.forms import ModelForm 
-from .models import Store,Product
+from .models import Store,Product,PaymentMethod
 
 
 class StoreForm(ModelForm):
@@ -12,4 +12,10 @@ class StoreForm(ModelForm):
 class ProductForm(ModelForm):
 	class Meta:
 		model = Product 
+		exclude = ['store']
+
+
+class PaymentMethodForm(ModelForm):
+	class Meta:
+		model = PaymentMethod 
 		exclude = ['store']
