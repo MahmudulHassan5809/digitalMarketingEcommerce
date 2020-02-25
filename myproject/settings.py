@@ -61,7 +61,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processor.categories'
             ],
+
         },
+
     },
 ]
 

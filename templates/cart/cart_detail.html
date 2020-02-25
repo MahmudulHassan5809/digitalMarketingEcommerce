@@ -1,12 +1,12 @@
 {% extends "dash_base.html" %}
-
+{% load simple_tag %}
 
 {% block dashcontent %}
 <div class="card shopping-cart">
 	<div class="card-header bg-dark text-light">
 		<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-		Shipping cart
-		<a href="" class="btn btn-outline-info btn-sm pull-right">Continiu shopping</a>
+		Shpping cart
+		<a href="" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
 		<div class="clearfix"></div>
 	</div>
 	<div class="card-body">
@@ -21,7 +21,7 @@
 				</div>
 				<div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
 					<div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
-						<h6><strong>{{value.price}} <span class="text-muted">x</span></strong>{{value.quantity}} = <strong>1000</strong></h6>
+						<h6><strong>{{value.price}} <span class="text-muted">x </span></strong>{{value.quantity}} <strong>={{ value.price|multiply:value.quantity }}</strong></h6>
 
 					</div>
 					<div class="col-4 col-sm-4 col-md-4">
