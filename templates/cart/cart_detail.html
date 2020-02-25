@@ -1,0 +1,56 @@
+{% extends "dash_base.html" %}
+
+
+{% block dashcontent %}
+<div class="card shopping-cart">
+	<div class="card-header bg-dark text-light">
+		<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+		Shipping cart
+		<a href="" class="btn btn-outline-info btn-sm pull-right">Continiu shopping</a>
+		<div class="clearfix"></div>
+	</div>
+	<div class="card-body">
+		<!-- PRODUCT -->
+		{% for key,value in request.session.cart.items %}
+			<div class="row">
+				<div class="col-12 col-sm-12 col-md-2 text-center">
+					<img class="img-responsive" src="{{value.image}}" alt="prewiew" width="120" height="80">
+				</div>
+				<div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+					<h4 class="product-name"><strong>{{value.name}}</strong></h4>
+				</div>
+				<div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+					<div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
+						<h6><strong>{{value.price}} <span class="text-muted">x</span></strong>{{value.quantity}} = <strong>1000</strong></h6>
+
+					</div>
+					<div class="col-4 col-sm-4 col-md-4">
+						<div class="">
+							<a href="{% url 'cart:item_increment' value.product_id %}" class="text-success btn btn-sm"><i class="fa fa-plus"></i></a>
+							<a href="{% url 'cart:item_decrement' value.product_id %}" class="text-danger btn btn-sm"><i class="fa fa-minus"></i></a>
+						</div>
+					</div>
+					<div class="col-2 col-sm-2 col-md-2 text-right">
+						<a href="{% url 'cart:item_clear' value.product_id %}" class="btn btn-outline-danger btn-xs">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		<hr>
+		<!-- END PRODUCT -->
+		
+		<div class="pull-right">
+			
+			<a href="" class="btn btn-outline-secondary pull-right">
+				CheckOut
+			</a>
+			<a href="{% url 'cart:cart_clear' %}" class="btn btn-outline-danger pull-right">
+				Clear Cart
+			</a>
+		</div>
+	</div>
+	
+</div>
+{% endblock dashcontent %}

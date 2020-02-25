@@ -2,6 +2,7 @@
 
 <!-- Header -->
 <section class="header">
+  
   <div class="row m-0 p-0">
     <div class="col-md-4 m-0 p-0">
       <div class="header-left">
@@ -56,13 +57,13 @@
             <div class="cart d-flex justify-content-around">
               <div class="cart-left">
                 <div class="cart-first float-left pr-5">
-                  <a href="#"
+                  <a href="{% url 'cart:cart_detail' %}"
                     ><i
                       class="fa fa-shopping-cart text-danger"
                       style="font-size:30px"
                     ></i
                   ></a>
-                  <span class="badge badge-warning" id="lblCartCount"> 5 </span>
+                  <span class="badge badge-warning" id="lblCartCount"> {{request.session.cart|length}} </span>
                 </div>
                 <div class="cart-second float-right">
                   <p>CART</p>
