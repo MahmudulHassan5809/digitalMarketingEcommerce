@@ -33,4 +33,4 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 20
 
     def get_owner(self, obj):
-        return obj.owner.username
+        return obj.store.owner.username

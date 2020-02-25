@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',
+    'cart',
+
 ]
 
 MIDDLEWARE = [
@@ -65,6 +67,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
+CART_PRODUCT_MODEL = 'store.models.Product'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -148,3 +151,6 @@ CKEDITOR_CONFIGS = {
         'width': '100%'
     }
 }
+
+
+CART_SESSION_ID = 'cart'

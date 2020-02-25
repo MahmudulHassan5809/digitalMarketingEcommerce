@@ -20,7 +20,7 @@
 					<div class="col-md-3 col-sm-6">
 						<div class="product-grid2">
 							<div class="product-image2">
-								<a href="#">
+								<a href="{% url 'store:product_detail' pk=product.id %}">
 									<img class="pic-1" src="{{ product.image.url }}">
 									<img class="pic-2" src="{{ product.image.url }}">
 								</a>

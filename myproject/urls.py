@@ -7,7 +7,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('auth/', include('authentication.urls', namespace="auth")),
-    path('', include('store.urls', namespace="store"))
+    path('', include('store.urls', namespace="store")),
+    path('cart/', include('cart.urls', namespace="cart"))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
@@ -20,7 +21,6 @@ if settings.FORCE_STATIC_FILE_SERVING and not settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
     settings.DEBUG = False
-
 
 
 admin.site.site_header = "DigitalService Admin"
