@@ -13,7 +13,7 @@ class RegisterView(View):
     def get(self, request, *args, **kwargs):
         user_form = UserForm()
         ProfileInlineFormset = inlineformset_factory(User, Profile, fields=(
-            'profile_pic', 'phone_number', 'address'), extra=1, can_delete=False)
+            'profile_pic', 'phone_number', 'address','country','state','zip_code'), extra=1, can_delete=False)
         formset = ProfileInlineFormset()
         return render(request, 'authentication/register.html', {
             "noodle_form": user_form,
@@ -23,6 +23,9 @@ class RegisterView(View):
 
     def post(self, request, *args, **kwargs):
         phone_number = request.POST.get('user_profile-0-phone_number')
+        country = request.POST.get('user_profile-0-country')
+        state = request.POST.get('user_profile-0-state')
+        zip_code = request.POST.get('user_profile-0-zip_code')
         address = request.POST.get('user_profile-0-address')
         profile_pic = request.FILES.get('user_profile-0-profile_pic')
         first_name = request.POST.get('first_name')

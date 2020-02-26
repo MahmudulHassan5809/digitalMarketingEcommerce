@@ -13,7 +13,7 @@
         {% if  user.user_store %}
             <a href="{% url 'store:my_product' user.user_store.id %}" class="list-group-item list-group-item-action bg-light">My Product</a>
         {% endif %}
-        <a href="{% url 'store:payment_method' %}" class="list-group-item list-group-item-action bg-light">Payment Method</a>
+        
         <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
     </div>

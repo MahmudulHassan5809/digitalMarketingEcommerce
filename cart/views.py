@@ -5,7 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.contrib import messages, auth
+from .forms import CheckOutForm
 from django.views.decorators.http import require_POST
+from django.contrib import messages
 from .cart import Cart
 from cart.models import Order
 
@@ -56,4 +58,55 @@ class CartDetail(LoginRequiredMixin, View):
 
 class CartCheckOut(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'cart/checkout.html')
+        data = {
+            'first_name' : request.user.first_name,
+            'last_name' : request.user.last_name,
+            'email' :     request.user.email,
+            'address' : request.user.user_profile.address,
+            'country' : request.user.user_profile.country,
+            'state' : request.user.user_profile.state,
+            'zip_code' : request.user.user_profile.zip_code,
+        }
+        checkout_form = CheckOutForm(data)
+        context = {
+            'checkout_form' : checkout_form
+        }
+        return render(request, 'cart/checkout.html',context)
+
+    def post(self,request,*args,**kwargs):
+        
+        cart = Cart(request)
+        total_bill = 0.0
+        for key,value in request.session['cart'].items():
+            total_bill = total_bill + (float(value['price']) * value['quantity'])
+        
+        
+        customer  = request.user
+        
+        order = Order.objects.create(customer=customer,total_bill=total_bill)
+        
+        for key,value in request.session['cart'].items():
+            for x in range(int(value['quantity'])):
+                order.products.add(int(value['product_id']))
+
+        product_count = ''
+        for key,value in request.session['cart'].items():
+            product_count += f"{value['name']} --> {value['quantity']}"
+
+        order.product_count = product_count
+
+        product_price = ''
+        for key,value in request.session['cart'].items():
+            price = (float(value['price']) * value['quantity'])
+            product_price += f"{value['name']} --> {value['quantity']} : {price} "
+
+        print(product_price)
+
+        order.product_price = product_price
+        
+        order.save()
+
+        cart.clear()
+
+        messages.success(request, 'Your Order Has Been Submitted')
+        return redirect('cart:cart_checkout')

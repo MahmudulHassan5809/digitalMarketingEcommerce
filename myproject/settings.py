@@ -26,12 +26,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authentication',
-    'store',
+    
     'taggit',
     'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',
+    
+
+    'authentication',
+    'store',
     'cart',
 
 ]

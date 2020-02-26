@@ -35,10 +35,7 @@ class Store(models.Model):
         return self.store_name
 
 
-class PaymentMethod(models.Model):
-    method_name = models.CharField(max_length=150)
-    account_number = models.CharField(max_length=150)
-    store = models.ForeignKey(Store,on_delete=models.CASCADE,related_name='store_payment_method')
+
 
 
 

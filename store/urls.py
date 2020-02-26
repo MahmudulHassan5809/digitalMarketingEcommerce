@@ -6,9 +6,6 @@ from .views import (
 	EditStore, 
 	MyProduct, 
 	ProductDetailView,
-	PaymenthMethodView,
-	PaymenthMethodEdit,
-	PaymenthMethodDelete
 	)
 
 app_name = 'store'
@@ -24,11 +21,5 @@ urlpatterns = [
     path('store/product/detail/<int:pk>/',
          ProductDetailView.as_view(), name="product_detail"),
 
-    path('store/payment/method/',
-         PaymenthMethodView.as_view(), name="payment_method"),
-
-    path('store/payment/method/edit/<int:id>',
-         PaymenthMethodEdit.as_view(), name="payment_method_edit"),
-    path('store/payment/method/delete/<int:id>',
-         PaymenthMethodDelete.as_view(), name="payment_method_delete"),
+    
 ]
