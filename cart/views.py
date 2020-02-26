@@ -17,6 +17,7 @@ def cart_add(request, id):
     cart.add(product=product)
     return redirect("store:home")
 
+
 @login_required(login_url="auth:login")
 def item_clear(request, id):
     cart = Cart(request)
@@ -48,12 +49,11 @@ def cart_clear(request):
     return redirect("cart:cart_detail")
 
 
+class CartDetail(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'cart/cart_detail.html')
 
-class CartDetail(LoginRequiredMixin,View):
-    def get(self,request,*args,**kwargs):
-        return render(request,'cart/cart_detail.html')
 
-
-class CartCheckOut(LoginRequiredMixin,View):
-    def get(self,request,*args,**kwargs):
-        pass
+class CartCheckOut(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'cart/checkout.html')
