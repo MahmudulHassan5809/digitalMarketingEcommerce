@@ -86,8 +86,7 @@ class CartCheckOut(LoginRequiredMixin, View):
         order = Order.objects.create(customer=customer,total_bill=total_bill)
         
         for key,value in request.session['cart'].items():
-            for x in range(int(value['quantity'])):
-                order.products.add(int(value['product_id']))
+            order.products.add(int(value['product_id']))
 
         product_count = ''
         for key,value in request.session['cart'].items():
@@ -106,7 +105,7 @@ class CartCheckOut(LoginRequiredMixin, View):
         
         order.save()
 
-        cart.clear()
+        #cart.clear()
 
         messages.success(request, 'Your Order Has Been Submitted')
         return redirect('cart:cart_checkout')
