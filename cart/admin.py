@@ -3,7 +3,7 @@ from .models import Order
 
 # Register your models here.
 class OrderAdmin(admin.ModelAdmin):
-	list_display = ["customer","completed","ordered_products","product_count","product_price","total_bill","paid"]
+	list_display = ["buyer","product_sellers","completed","ordered_products","product_seller","product_count","product_price","total_bill","paid"]
 	search_fields = ('customer','completed',)
 	list_filter = ['completed','paid']
 	list_editable = ['completed','paid']

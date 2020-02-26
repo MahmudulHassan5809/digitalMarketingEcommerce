@@ -81,9 +81,9 @@ class CartCheckOut(LoginRequiredMixin, View):
             total_bill = total_bill + (float(value['price']) * value['quantity'])
         
         
-        customer  = request.user
+        buyer  = request.user
         
-        order = Order.objects.create(customer=customer,total_bill=total_bill)
+        order = Order.objects.create(buyer=buyer,total_bill=total_bill)
         
         for key,value in request.session['cart'].items():
             order.products.add(int(value['product_id']))
@@ -99,8 +99,17 @@ class CartCheckOut(LoginRequiredMixin, View):
             price = (float(value['price']) * value['quantity'])
             product_price += f"{value['name']} --> {value['quantity']} : {price} "
 
-        print(product_price)
 
+        product_seller = ''
+        for key,value in request.session['cart'].items():
+            product_obj = get_object_or_404(Product,id=int(value['product_id']))
+            seller = product_obj.store.owner
+            order.sellers.add(seller.id)
+            product_seller += f"{value['name']} --> {product_obj.store.owner.username} "
+
+        
+
+        order.product_seller = product_seller
         order.product_price = product_price
         
         order.save()
