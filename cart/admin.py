@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order
+from .models import Order,TransactionMethod
 
 # Register your models here.
 class OrderAdmin(admin.ModelAdmin):
@@ -9,6 +9,10 @@ class OrderAdmin(admin.ModelAdmin):
 	list_editable = ['completed','paid']
 	list_per_page = 20
 
-
-
 admin.site.register(Order,OrderAdmin)
+
+
+@admin.register(TransactionMethod)
+class TransactionAdmin(admin.ModelAdmin):
+	list_display = ('method_name','account_number','image','active')
+	list_filter = ('active',)

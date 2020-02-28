@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-
+from cart.models import TransactionMethod
 
 
 class CheckOutForm(forms.Form):
@@ -12,3 +12,6 @@ class CheckOutForm(forms.Form):
 	country = forms.CharField(required=True)
 	state = forms.CharField(required=True)
 	zip_code =  forms.CharField(required=True)
+	payment = forms.ModelChoiceField(queryset=TransactionMethod.objects.all())
+
+	

@@ -1,7 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block title %} {{product.name}}
 {% endblock title %} {% block maincontent %}
 <div class="container">
-
     <div class="card mt-3">
       <div class="row">
         <aside class="col-sm-5 border-right">
@@ -9,7 +8,7 @@
             <div class="img-big-wrap">
               <div>
                 <a href="#"
-                  ><img class="img-responsive" src="{{product.image.url}}"
+                  ><img class="img-responsive w-100" src="{{product.image.url}}"
                 /></a>
               </div>
             </div>

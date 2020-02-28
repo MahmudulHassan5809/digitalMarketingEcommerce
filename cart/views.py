@@ -9,7 +9,7 @@ from .forms import CheckOutForm
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from .cart import Cart
-from cart.models import Order
+from cart.models import Order,TransactionMethod
 
 
 @login_required(login_url="auth:login")
@@ -66,55 +66,65 @@ class CartCheckOut(LoginRequiredMixin, View):
             'country' : request.user.user_profile.country,
             'state' : request.user.user_profile.state,
             'zip_code' : request.user.user_profile.zip_code,
+            
         }
-        checkout_form = CheckOutForm(data)
+        checkout_form = CheckOutForm(initial=data)
         context = {
             'checkout_form' : checkout_form
         }
         return render(request, 'cart/checkout.html',context)
 
     def post(self,request,*args,**kwargs):
-        
-        cart = Cart(request)
-        total_bill = 0.0
-        for key,value in request.session['cart'].items():
-            total_bill = total_bill + (float(value['price']) * value['quantity'])
-        
-        
-        buyer  = request.user
-        
-        order = Order.objects.create(buyer=buyer,total_bill=total_bill)
-        
-        for key,value in request.session['cart'].items():
-            order.products.add(int(value['product_id']))
 
-        product_count = ''
-        for key,value in request.session['cart'].items():
-            product_count += f"{value['name']} --> {value['quantity']}"
+        check_out_form = CheckOutForm(request.POST)
 
-        order.product_count = product_count
+        if check_out_form.is_valid():
+            cart = Cart(request)
+            total_bill = 0.0
+            for key,value in request.session['cart'].items():
+                total_bill = total_bill + (float(value['price']) * value['quantity'])
+            
+            
+            buyer  = request.user
+            
+            order = Order.objects.create(buyer=buyer,total_bill=total_bill)
+            
+            for key,value in request.session['cart'].items():
+                order.products.add(int(value['product_id']))
 
-        product_price = ''
-        for key,value in request.session['cart'].items():
-            price = (float(value['price']) * value['quantity'])
-            product_price += f"{value['name']} --> {value['quantity']} : {price} "
+            product_count = ''
+            for key,value in request.session['cart'].items():
+                product_count += f"{value['name']} --> {value['quantity']}"
+
+            order.product_count = product_count
+
+            product_price = ''
+            for key,value in request.session['cart'].items():
+                price = (float(value['price']) * value['quantity'])
+                product_price += f"{value['name']} --> {value['quantity']} : {price} "
 
 
-        product_seller = ''
-        for key,value in request.session['cart'].items():
-            product_obj = get_object_or_404(Product,id=int(value['product_id']))
-            seller = product_obj.store.owner
-            order.sellers.add(seller.id)
-            product_seller += f"{value['name']} --> {product_obj.store.owner.username} "
+            product_seller = ''
+            for key,value in request.session['cart'].items():
+                product_obj = get_object_or_404(Product,id=int(value['product_id']))
+                seller = product_obj.store.owner
+                order.sellers.add(seller.id)
+                product_seller += f"{value['name']} --> {product_obj.store.owner.username} "
 
-        
+            
 
-        order.product_seller = product_seller
-        order.product_price = product_price
-        
-        order.save()
+            order.product_seller = product_seller
+            order.product_price = product_price
+            
+            order.save()
 
-        #cart.clear()
+            #cart.clear()
 
-        messages.success(request, 'Your Order Has Been Submitted')
-        return redirect('cart:cart_checkout')
+            messages.success(request, 'Your Order Has Been Submitted')
+            return redirect('cart:cart_checkout')
+
+        else:
+            context = {
+                'checkout_form' : check_out_form
+            }
+            return render(request, 'cart/checkout.html',context)
