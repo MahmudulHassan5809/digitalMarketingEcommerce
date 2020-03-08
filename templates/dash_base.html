@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% load static %}
 
 {% block maincontent %}
@@ -13,14 +13,16 @@
         {% if  user.user_store %}
             <a href="{% url 'store:my_product' user.user_store.id %}" class="list-group-item list-group-item-action bg-light">My Product</a>
         {% endif %}
-        
-        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+
+        {% if user.user_store %}
+            <a href="{% url 'store:my_sell_details' user.user_store.id  %}" class="list-group-item list-group-item-action bg-light">Sell History</a>
+        {% endif %}
+        <a href="{% url 'store:my_buy_details' user.id  %}" class="list-group-item list-group-item-action bg-light">Buy History</a>
     </div>
         </div>
         <div class="col-md-9">
             {% block dashcontent %}
-            
+
             {% endblock dashcontent %}
         </div>
     </div>

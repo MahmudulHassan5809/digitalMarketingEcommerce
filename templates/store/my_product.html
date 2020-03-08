@@ -1,4 +1,4 @@
-{% extends 'dash_base.html' %} 
+{% extends 'dash_base.html' %}
 {% load static %}
 
 
@@ -30,7 +30,7 @@ Product
 				<td><img src="{{product.image.url}}" alt="{{product.name}}" width="60px"></td>
 				<td>{{product.price}}</td>
 				<td>
-					<a href="" class="btn btn-sm btn-info">
+					<a href="{% url 'store:my_product_edit' product.id %}" class="btn btn-sm btn-info">
 						<i class="fa fa-edit"></i>
 					</a>
 				</td>
@@ -48,7 +48,7 @@ Product
 	{% with my_products as items %}
 	{% if items.has_other_pages %}
 	<nav aria-label="Page navigation example">
-		
+
 		<ul class="pagination">
 			{% if items.has_previous %}
 				<li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -68,12 +68,12 @@ Product
 			<li class="page-item disabled"><a class="page-link" href="#"><span>&raquo;</span></a></li>
 			{% endif %}
 		</ul>
-		
+
 	</nav>
 	{% endif %}
 	{% endwith %}
 
-	
-	
+
+
 </div>
 {% endblock dashcontent %}

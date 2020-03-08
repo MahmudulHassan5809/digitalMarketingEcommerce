@@ -123,3 +123,10 @@ class EditProfileView(LoginRequiredMixin, View):
         messages.success(request, "Profile Updated Successfully")
 
         return render(request, 'authentication/dashboard.html')
+
+
+class LogoutView(LoginRequiredMixin,View):
+    def get(self,request,*args,**kwargs):
+        logout(request)
+        messages.success(request, ('Successfully logged out'))
+        return redirect('auth:login')

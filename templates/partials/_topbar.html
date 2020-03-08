@@ -79,12 +79,17 @@
                   class="pb-2"
                   id="login-register"
                   >Dashboard</a>
+                  <a
+                  href="{% url 'auth:logout' %}"
+                  class="pb-2 border"
+                  id="login-register"
+                  >Logout</a>
               {% else %}
                  <a
                   href="{% url 'auth:register' %}"
                   class="pb-2"
                   id="login-register"
-                  >Login / Register</a> 
+                  >Login / Register</a>
               {% endif %}
               <li>
                 <a href="https://web.facebook.com/buysmmusa/" target="_blank"

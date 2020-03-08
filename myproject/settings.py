@@ -26,12 +26,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'taggit',
     'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',
-    
+
 
     'authentication',
     'store',
@@ -63,6 +63,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processor.categories',
+                'store.context_processor.all_tag',
                 'cart.context_processor.cart_total_amount'
             ],
 

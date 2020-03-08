@@ -1,0 +1,76 @@
+{% extends 'dash_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block title %}
+    Sell History
+{% endblock title %}
+
+{% block dashcontent %}
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="bg-info p-2 text-white mt-2 shadow">Your Buy History</h5>
+        </div>
+        <div class="card shadow mt-2 p-4 shadow">
+            <p>Please Wait . You Will Get A Call From Our Admin Panel Soon.</p>
+            <table class="table table-hover table-inverse">
+
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Product Quantity</th>
+                        <th>Product Price</th>
+                        <th>Product Seller</th>
+                        <th>Total Bill</th>
+                        <th>Orderd Date</th>
+                        <th>Completed</th>
+                        <th>Paid</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in buy_details.all %}
+                     <tr>
+                        <td>
+                            {{item.ordered_products}}
+                        </td>
+                        <td>
+                            {{item.product_count}}
+                        </td>
+                        <td>
+                            {{item.product_price}}
+                        </td>
+                        <td>
+                            {{item.product_seller}}
+                        </td>
+                        <td>
+                            {{item.total_bill}}
+                        </td>
+                        <td>
+                            {{item.date}}
+                        </td>
+                        <td>
+                            {% if item.completed %}
+                                Complted
+                            {% else %}
+                                Not Completed
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.paid %}
+                                Paid
+                            {% else %}
+                                Not Paid
+                            {% endif %}
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock dashcontent %}
+

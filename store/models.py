@@ -1,9 +1,11 @@
 from django.db import models
+from django.db.models.signals import post_delete
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from taggit.models import Tag
 from ckeditor_uploader.fields import RichTextUploadingField
-
 
 
 class Category(models.Model):
@@ -21,9 +23,6 @@ class Category(models.Model):
         return ' -> '.join(full_path[::-1])
 
 
-
-
-
 class Store(models.Model):
     owner = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='user_store')
@@ -33,10 +32,6 @@ class Store(models.Model):
 
     def __str__(self):
         return self.store_name
-
-
-
-
 
 
 class Product(models.Model):
@@ -55,3 +50,16 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# @receiver(post_delete, sender=Product)
+# def after_deleting(sender, instance, **kwargs):
+#     if not Product.objects.filter(tags=instance.tags):
+#         print('Deleteting')
+#         instance.tags.delete()
+
+
+# @receiver(post_save, sender=Product)
+# def after_deleting(sender, instance, **kwargs):
+#     if instance.created:
+

@@ -4,7 +4,10 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import StoreForm, ProductForm
 from .models import Store, Product, Category
+from cart.models import Order
 from django.views import View
+from functools import reduce
+from django.db import models
 from django.views.generic import DetailView
 
 
@@ -79,6 +82,13 @@ class MyProductView(LoginRequiredMixin, View):
             product = form.save(commit=False)
             product.store = request.user.user_store
             product.save()
+
+            taglist = request.POST.get("tags")
+
+            tagslist = [str(r) for r in taglist.split(',')]
+            product.tags.add(*tagslist)
+            product.save()
+
             messages.success(request, 'Product is created successfully')
             return redirect('store:product_view')
         else:
@@ -103,6 +113,46 @@ class MyProduct(LoginRequiredMixin, View):
         return render(request, 'store/my_product.html', context)
 
 
+class MyProductEdit(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('id')
+        product_obj = get_object_or_404(Product, id=product_id)
+
+        product_form = ProductForm(instance=product_obj)
+        context = {
+            'product_obj': product_obj,
+            'product_form': product_form
+        }
+
+        return render(request, 'store/my_product_edit.html', context)
+
+    def post(self, request, *args, **kwargs):
+        product_id = kwargs.get('id')
+        product_obj = get_object_or_404(Product, id=product_id)
+
+        product_form = ProductForm(
+            request.POST, request.FILES, instance=product_obj)
+
+        context = {
+            'product_form': product_form,
+            'product_obj': product_obj
+        }
+
+        if product_form.is_valid():
+            product_form.save()
+
+            taglist = request.POST.get("tags")
+
+            tagslist = [str(r) for r in taglist.split(',')]
+            product_obj.tags.set(*tagslist, clear=False)
+            product_obj.save()
+
+            messages.success(request, 'Product Updated Successfully')
+            return redirect('store:my_product', request.user.user_store.id)
+
+        return render(request, 'store/my_product_edit.html', context)
+
+
 class CategoryProductView(View):
     def get(self, request, *args, **kwargs):
         category_id = kwargs.get('id')
@@ -125,5 +175,31 @@ class ProductDetailView(DetailView):
     model = Product
 
 
+class MySellDetails(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        store_id = kwargs.get('id')
+        store_obj = get_object_or_404(Store, id=store_id)
+
+        # all_products = store_obj.store_products.all()
+        # product_ids = all_products.values_list('id', flat=True)
+
+        sell_details = request.user.seller_orders.all()
+
+        context = {
+            'sell_details': sell_details,
+            'store_obj': store_obj
+        }
+        return render(request, 'store/sell_details.html', context)
 
 
+class MyBuyDetails(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        user_id = kwargs.get('id')
+
+        buy_details = request.user.buyer_orders.all()
+
+        context = {
+            'buy_details': buy_details,
+
+        }
+        return render(request, 'store/buy_details.html', context)
