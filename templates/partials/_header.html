@@ -2,7 +2,7 @@
 
 <!-- Header -->
 <section class="header">
-  
+
   <div class="row m-0 p-0">
     <div class="col-md-4 m-0 p-0">
       <div class="header-left">
@@ -29,18 +29,21 @@
               </p>
             </div>
             <div class="search">
-              <form class="form-inline">
+              <form class="form-inline" method="POST" action="{% url 'store:product_search' %}">
+                {% csrf_token %}
                 <select
                   class="custom-select my-1 mr-sm-2"
                   id="inlineFormCustomSelectPref"
+                  name="category" required
                 >
-                  <option selected>All Categories</option>
+                  <option selected value="">All Categories</option>
                   {% for cat in categories %}
                     <option value="{{cat.id}}">{{cat.category_name}}</option>
                   {% endfor %}
                 </select>
 
                 <input
+                  required
                   type="text"
                   name="search"
                   placeholder="Search for Products"
@@ -74,7 +77,7 @@
                 <a href="#">
                   <i class="fa fa-heart text-danger" style="font-size:30px"></i
                 ></a>
-                <span class="badge badge-warning" id="lblCartCount"> 5 </span>
+                <span class="badge badge-warning" id="lblCartCount"> {{wishlist_length}} </span>
               </div>
             </div>
           </div>

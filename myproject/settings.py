@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processor.categories',
                 'store.context_processor.all_tag',
+                'store.context_processor.wishlist_length',
                 'cart.context_processor.cart_total_amount'
             ],
 

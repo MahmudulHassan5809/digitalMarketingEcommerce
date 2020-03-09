@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .models import Profile
 from .forms import UserForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.views import View
 
 
@@ -13,7 +14,7 @@ class RegisterView(View):
     def get(self, request, *args, **kwargs):
         user_form = UserForm()
         ProfileInlineFormset = inlineformset_factory(User, Profile, fields=(
-            'profile_pic', 'phone_number', 'address','country','state','zip_code'), extra=1, can_delete=False)
+            'profile_pic', 'phone_number', 'address', 'country', 'state', 'zip_code'), extra=1, can_delete=False)
         formset = ProfileInlineFormset()
         return render(request, 'authentication/register.html', {
             "noodle_form": user_form,
@@ -125,8 +126,31 @@ class EditProfileView(LoginRequiredMixin, View):
         return render(request, 'authentication/dashboard.html')
 
 
-class LogoutView(LoginRequiredMixin,View):
-    def get(self,request,*args,**kwargs):
+class ChangePassword(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        chanage_password_form = PasswordChangeForm(user=request.user)
+        context = {
+            'chanage_password_form': chanage_password_form
+        }
+        return render(request, 'authentication/change_password.html', {'chanage_password_form': chanage_password_form})
+
+    def post(self, request, *args, **kwargs):
+        chanage_password_form = PasswordChangeForm(
+            data=request.POST, user=request.user)
+        context = {
+            'chanage_password_form': chanage_password_form
+        }
+        if chanage_password_form.is_valid():
+            chanage_password_form.save()
+            update_session_auth_hash(request, chanage_password_form.user)
+            messages.success(request, ('You have Changed Your Password...'))
+            return redirect('auth:change_password')
+        else:
+            return render(request, 'authentication/change_password.html', {'chanage_password_form': chanage_password_form})
+
+
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
         logout(request)
         messages.success(request, ('Successfully logged out'))
         return redirect('auth:login')

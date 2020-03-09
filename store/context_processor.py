@@ -1,4 +1,4 @@
-from .models import Category
+from .models import Category, WishList
 from taggit.models import Tag
 
 
@@ -12,3 +12,8 @@ def all_tag(request):
     all_tag = Tag.objects.all()
     print(all_tag)
     return {'all_tag': all_tag}
+
+
+def wishlist_length(request):
+    wishlist_length = WishList.objects.all().count()
+    return {'wishlist_length': wishlist_length}

@@ -52,6 +52,16 @@ class Product(models.Model):
         return self.name
 
 
+class WishList(models.Model):
+    owner = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='user_wishlist')
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="product_wishlist")
+
+    def __str__(self):
+        return f'{self.owner.username} Likes {self.product.name}'
+
+
 # @receiver(post_delete, sender=Product)
 # def after_deleting(sender, instance, **kwargs):
 #     if not Product.objects.filter(tags=instance.tags):
@@ -62,4 +72,3 @@ class Product(models.Model):
 # @receiver(post_save, sender=Product)
 # def after_deleting(sender, instance, **kwargs):
 #     if instance.created:
-

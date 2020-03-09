@@ -18,6 +18,7 @@
             <a href="{% url 'store:my_sell_details' user.user_store.id  %}" class="list-group-item list-group-item-action bg-light">Sell History</a>
         {% endif %}
         <a href="{% url 'store:my_buy_details' user.id  %}" class="list-group-item list-group-item-action bg-light">Buy History</a>
+        <a href="{% url 'auth:change_password' %}" class="list-group-item list-group-item-action bg-light">Change Password</a>
     </div>
         </div>
         <div class="col-md-9">

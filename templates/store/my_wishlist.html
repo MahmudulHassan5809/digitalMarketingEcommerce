@@ -11,6 +11,7 @@ Product
 
 {% block dashcontent %}
 <div class="mt-2">
+	{% include 'partials/_alert.html' %}
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
@@ -25,17 +26,17 @@ Product
 		<tbody>
 			{% for product in my_products %}
 			<tr>
-				<td>{{product.category.category_name}}</td>
-				<td>{{product.name}}</td>
-				<td><img src="{{product.image.url}}" alt="{{product.name}}" width="60px"></td>
-				<td>{{product.price}}</td>
+				<td>{{product.product.category.category_name}}</td>
+				<td>{{product.product.name}}</td>
+				<td><img src="{{product.product.image.url}}" alt="{{product.product.name}}" width="60px"></td>
+				<td>{{product.product.price}}</td>
 				<td>
-					<a href="{% url 'store:my_product_edit' product.id %}" class="btn btn-sm btn-info">
-						<i class="fa fa-edit"></i>
+					<a href="{% url 'store:product_detail' product.product.id %}" class="btn btn-sm btn-info">
+						<i class="fa fa-eye"></i>
 					</a>
 				</td>
 				<td>
-					<a href="{% url 'store:my_product_delete' product.id %}" class="btn btn-sm btn-danger">
+					<a href="{% url 'store:remove_from_wishlist' product.id %}" class="btn btn-sm btn-danger">
 						<i class="fa fa-trash"></i>
 					</a>
 				</td>

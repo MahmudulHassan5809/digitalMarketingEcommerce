@@ -3,11 +3,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import StoreForm, ProductForm
-from .models import Store, Product, Category
+from .models import Store, Product, Category, WishList
 from cart.models import Order
 from django.views import View
 from functools import reduce
 from django.db import models
+from django.db.models import Q
 from django.views.generic import DetailView
 
 
@@ -153,6 +154,14 @@ class MyProductEdit(LoginRequiredMixin, View):
         return render(request, 'store/my_product_edit.html', context)
 
 
+class MyProductDelete(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('id')
+        instance = Product.objects.get(id=product_id)
+        instance.delete()
+        return redirect('store:my_product', request.user.user_store.id)
+
+
 class CategoryProductView(View):
     def get(self, request, *args, **kwargs):
         category_id = kwargs.get('id')
@@ -203,3 +212,85 @@ class MyBuyDetails(LoginRequiredMixin, View):
 
         }
         return render(request, 'store/buy_details.html', context)
+
+
+class TagProducts(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        tag_name = kwargs.get('tag_name')
+        products = Product.objects.filter(tags__name__in=[tag_name])
+
+        page = request.GET.get('page', 1)
+        paginator = Paginator(products, 10)
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+        context = {'products': products, "tag_name": tag_name}
+        return render(request, 'store/tag_product.html', context)
+
+
+class ProductSearch(View):
+    def post(self, request, *args, **kwargs):
+        category_id = request.POST.get('category')
+        search = request.POST.get('search')
+
+        category_obj = get_object_or_404(Category, id=category_id)
+        products = Product.objects.filter(Q(category__category_name__icontains=search) | Q(
+            name__icontains=search) | Q(description__icontains=search), category=category_id)
+
+        page = request.GET.get('page', 1)
+        paginator = Paginator(products, 10)
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+        context = {'products': products,
+                   "category_obj": category_obj, "search": search}
+        return render(request, 'store/search_product.html', context)
+
+
+class AddProductWishlist(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('id')
+        product_obj = get_object_or_404(Product, id=product_id)
+
+        wishlist_check = WishList.objects.filter(
+            owner=request.user, product=product_obj).first()
+
+        if wishlist_check:
+            messages.success(request, "Product Already In Your WishList")
+        else:
+            add_wishlist = WishList.objects.create(
+                owner=request.user, product=product_obj)
+            messages.success(request, "Product Added To Your WishList")
+
+        return redirect('store:wishlist')
+
+
+class MyWishList(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        my_products = WishList.objects.filter(owner=request.user)
+
+        page = request.GET.get('page', 1)
+        paginator = Paginator(my_products, 10)
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+        context = {'my_products': products}
+        return render(request, 'store/my_wishlist.html', context)
+
+
+class RemoveFromWishList(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        wishlist_id = kwargs.get('id')
+        instance = WishList.objects.get(id=wishlist_id)
+        instance.delete()
+        messages.success(request, "Product Deleted From Your WishList")
+        return redirect('store:wishlist')

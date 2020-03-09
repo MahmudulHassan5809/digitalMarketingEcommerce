@@ -9,6 +9,12 @@ from .views import (
     MySellDetails,
     MyBuyDetails,
     MyProductEdit,
+    MyProductDelete,
+    TagProducts,
+    ProductSearch,
+    AddProductWishlist,
+    MyWishList,
+    RemoveFromWishList,
 )
 
 app_name = 'store'
@@ -23,8 +29,21 @@ urlpatterns = [
     path('store/my-product/<int:id>', MyProduct.as_view(), name="my_product"),
     path('store/my-product/edit/<int:id>',
          MyProductEdit.as_view(), name="my_product_edit"),
+    path('store/my-product/delete/<int:id>',
+         MyProductDelete.as_view(), name="my_product_delete"),
     path('store/product/detail/<int:pk>/',
          ProductDetailView.as_view(), name="product_detail"),
+    path('store/tag/products/<str:tag_name>/',
+         TagProducts.as_view(), name="tag_products"),
+    path('store/products/search/',
+         ProductSearch.as_view(), name="product_search"),
+
+    path('store/add/product/wishlist/<int:id>',
+         AddProductWishlist.as_view(), name="add_wishlist"),
+    path('store/my-wishlist/',
+         MyWishList.as_view(), name="wishlist"),
+    path('store/remove/product/my-wishlist/<int:id>',
+         RemoveFromWishList.as_view(), name="remove_from_wishlist"),
 
     path('store/my-sell/details/<int:id>/',
          MySellDetails.as_view(), name="my_sell_details"),
