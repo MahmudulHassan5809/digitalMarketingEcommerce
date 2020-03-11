@@ -20,6 +20,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'baton',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -162,3 +163,55 @@ CKEDITOR_CONFIGS = {
 
 
 CART_SESSION_ID = 'cart'
+
+BATON = {
+    'SITE_HEADER': 'DigitalService Admin',
+    'SITE_TITLE': 'DigitalService Admin Admin Portal',
+    'INDEX_TITLE': 'Welcome to DigitalService Admin Researcher Portal',
+    'SUPPORT_HREF': 'https://github.com/MahmudulHassan5809',
+    'COPYRIGHT': 'copyright © 2019 <a href="https://github.com/MahmudulHassan5809">Mahmudul Hassan</a>',  # noqa
+    'POWERED_BY': '<a href="https://github.com/MahmudulHassan5809">Mahmudul Hassan</a>',
+    'CONFIRM_UNSAVED_CHANGES': True,
+    'SHOW_MULTIPART_UPLOADING': True,
+    'ENABLE_IMAGES_PREVIEW': True,
+    # 'MENU': (
+    #     {'type': 'title', 'label': 'main', 'apps': ('auth', )},
+    #     {
+    #         'type': 'app',
+    #         'name': 'auth',
+    #         'label': 'Authentication',
+    #         'icon': 'fa fa-lock',
+    #         'models': (
+    #             {
+    #                 'name': 'user',
+    #                 'label': 'Users'
+    #             },
+    #             {
+    #                 'name': 'group',
+    #                 'label': 'Groups'
+    #             },
+    #         )
+    #     },
+    #     {
+    #         'type': 'app',
+    #         'name': 'accounts',
+    #         'label': 'Accounts',
+    #         'icon': 'fa fa-user',
+    #         'models': (
+    #             {
+    #                 'name': 'profile',
+    #                 'label': 'Profiles'
+    #             },
+    #             {
+    #                 'name': 'teacher',
+    #                 'label': 'Teachers'
+    #             },
+    #             {
+    #                 'name': 'student',
+    #                 'label': 'Students'
+    #             },
+    #         )
+    #     },
+
+    # ),
+}
