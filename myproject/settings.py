@@ -174,44 +174,85 @@ BATON = {
     'CONFIRM_UNSAVED_CHANGES': True,
     'SHOW_MULTIPART_UPLOADING': True,
     'ENABLE_IMAGES_PREVIEW': True,
-    # 'MENU': (
-    #     {'type': 'title', 'label': 'main', 'apps': ('auth', )},
-    #     {
-    #         'type': 'app',
-    #         'name': 'auth',
-    #         'label': 'Authentication',
-    #         'icon': 'fa fa-lock',
-    #         'models': (
-    #             {
-    #                 'name': 'user',
-    #                 'label': 'Users'
-    #             },
-    #             {
-    #                 'name': 'group',
-    #                 'label': 'Groups'
-    #             },
-    #         )
-    #     },
-    #     {
-    #         'type': 'app',
-    #         'name': 'accounts',
-    #         'label': 'Accounts',
-    #         'icon': 'fa fa-user',
-    #         'models': (
-    #             {
-    #                 'name': 'profile',
-    #                 'label': 'Profiles'
-    #             },
-    #             {
-    #                 'name': 'teacher',
-    #                 'label': 'Teachers'
-    #             },
-    #             {
-    #                 'name': 'student',
-    #                 'label': 'Students'
-    #             },
-    #         )
-    #     },
+    'MENU': (
+        {'type': 'title', 'label': 'main', 'apps': ('auth', )},
+        {
+            'type': 'app',
+            'name': 'auth',
+            'label': 'Authentication',
+            'icon': 'fa fa-lock',
+            'models': (
+                {
+                    'name': 'user',
+                    'label': 'Users'
+                },
+                {
+                    'name': 'group',
+                    'label': 'Groups'
+                },
+            )
+        },
+        {
+            'type': 'app',
+            'name': 'authentications',
+            'label': 'Accounts',
+            'icon': 'fa fa-user',
+            'models': (
+                {
+                    'name': 'profile',
+                    'label': 'Profiles'
+                },
+            )
+        },
+        {
+            'type': 'app',
+            'name': 'store',
+            'label': 'Store',
+            'icon': 'fa fa-store',
+            'models': (
+                {
+                    'name': 'category',
+                    'label': 'Categories'
+                },
+                {
+                    'name': 'product',
+                    'label': 'Products'
+                },
+                {
+                    'name': 'store',
+                    'label': 'Stores'
+                },
+            )
+        },
+        {
+            'type': 'app',
+            'name': 'taggit',
+            'label': 'Taggit',
+            'icon': 'fa fa-tag',
+            'models': (
+                {
+                    'name': 'tags',
+                    'label': 'Tags'
+                },
+            )
+        },
+        {
+            'type': 'app',
+            'name': 'cart',
+            'label': 'Cart',
+            'icon': 'fa fa-cart',
+            'models': (
+                {
+                    'name': 'order',
+                    'label': 'Orders'
+                },
+                {
+                    'name': 'transactionmethod',
+                    'label': 'Transaction Methods'
+                },
 
-    # ),
+            )
+        },
+
+    ),
 }
