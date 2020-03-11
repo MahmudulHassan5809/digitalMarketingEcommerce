@@ -224,23 +224,23 @@ BATON = {
                 },
             )
         },
-        {
-            'type': 'app',
-            'name': 'taggit',
-            'label': 'Taggit',
-            'icon': 'fa fa-tag',
-            'models': (
-                {
-                    'name': 'tags',
-                    'label': 'Tags'
-                },
-            )
-        },
+        # {
+        #     'type': 'app',
+        #     'name': 'taggit',
+        #     'label': 'Taggit',
+        #     'icon': 'fa fa-tag',
+        #     'models': (
+        #         {
+        #             'name': 'tags',
+        #             'label': 'Tags'
+        #         },
+        #     )
+        # },
         {
             'type': 'app',
             'name': 'cart',
             'label': 'Cart',
-            'icon': 'fa fa-cart',
+            'icon': 'fa fa-shopping-cart',
             'models': (
                 {
                     'name': 'order',
